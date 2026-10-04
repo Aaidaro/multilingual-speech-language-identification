@@ -2,7 +2,7 @@
 
 A classical machine learning project for identifying the spoken language of audio recordings using engineered acoustic features.
 
-The project was developed as a final project for a Machine Learning course and includes both **supervised classification** and **unsupervised clustering** of multilingual speech.
+The project was developed as a final project for a Machine Learning course (University of Tehran, Fall 2025) and includes both **supervised classification** and **unsupervised clustering** of multilingual speech.
 
 ## Project Overview
 
@@ -157,5 +157,5 @@ The complete report contains the methodology, model descriptions, figures, resul
 
 ## Authors
 
-- Mohammadhossein Altafi
+- Mohammad Hossein Altafi
 - Fateme (Aida) Roshani
