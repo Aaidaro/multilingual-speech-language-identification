@@ -1,9 +1,5 @@
 # Dataset
 
-The dataset used in this project is **not included in the public GitHub repository**.
-
-This directory contains documentation only.
-
 ## Dataset Summary
 
 The final project dataset contains **720 approximately one-minute speech recordings** across four languages:
@@ -15,13 +11,7 @@ The final project dataset contains **720 approximately one-minute speech recordi
 
 The recordings were collected during the data-collection phase of the course project and were later used for feature extraction, classification, and clustering.
 
-## Why the Data Is Not Included
-
 The raw audio files are intentionally excluded from this repository.
-
-This keeps the repository focused on the machine learning implementation and avoids redistributing source audio through the project repository.
-
-The generated feature file, `Dataset.csv`, is also not committed to the repository. It can be reproduced locally by running the feature-extraction notebook on an available copy of the audio dataset.
 
 ## Expected Local Dataset Structure
 
@@ -60,7 +50,7 @@ The preprocessing notebook determines the language label from the top-level lang
 Running:
 
 ```text
-notebooks/Data_Cleaning_and_Feature_Extraction.ipynb
+notebooks/01_Data_Cleaning_and_Feature_Extraction.ipynb
 ```
 
 produces a tabular dataset named:
@@ -88,23 +78,3 @@ The language label is stored alongside the extracted features and is used by the
 5. The notebook will generate `Dataset.csv`.
 6. Use that file with the classification, clustering, and evaluation notebooks.
 
-If you change the local location of the dataset, update the dataset path in the feature-extraction notebook accordingly.
-
-## Recommended `.gitignore` Entries
-
-To prevent accidental publication of the local dataset, add entries such as the following to the repository's `.gitignore`:
-
-```gitignore
-# Local project data
-Dataset/
-Dataset.csv
-
-# Raw audio
-*.mp3
-```
-
-If you later store generated data in a different directory, add that location to `.gitignore` as well.
-
-## Data Availability
-
-The public repository contains the code, documentation, report, and project results, but **does not provide the raw audio recordings**.
