@@ -1,87 +1,102 @@
 # Multilingual Speech Language Identification
 
-A classical machine learning project for identifying the spoken language of audio recordings using engineered acoustic features.
+A classical machine learning pipeline for **spoken-language identification** using engineered acoustic features. This project was developed as a final project for a Machine Learning course and explores both **supervised classification** and **unsupervised clustering** of multilingual speech recordings.
 
-The project was developed as a final project for a Machine Learning course (University of Tehran, Fall 2025) and includes both **supervised classification** and **unsupervised clustering** of multilingual speech.
+## Authors & Contributors
+
+This project was jointly developed by:
+
+- **[Mohammad Hossein Altafi](https://github.com/MHAltafi)**
+- **[Aida roshani](https://github.com/Aaidaro)**
+
+Both authors collaboratively contributed to the design, implementation, and development of this project.
+
+<p align="left">
+  <img
+    src="https://thumb.wikimedia.org/wikipedia/en/thumb/f/fd/University_of_Tehran_logo.svg/1280px-University_of_Tehran_logo.svg.png"
+    alt="University of Tehran"
+    width="45"
+    align="center"
+  />
+  &nbsp;&nbsp;
+  <strong>School of Electrical and Computer Engineering, University of Tehran — 2026</strong>
+</p>
+
+**[Read the full project report](report/Report.pdf)** · **[Explore the notebooks](notebooks/README.md)** · **[Dataset documentation](data/README.md)**
 
 ## Project Overview
 
-The dataset contains **720 approximately one-minute speech recordings** from four languages:
+The project uses **720 approximately one-minute speech recordings** in four languages: **German, Italian, Korean, and Spanish**. The dataset was collected collaboratively in the first phase of the course project; the second phase focuses on processing, feature extraction, classification, and clustering.
 
-- German
-- Italian
-- Korean
-- Spanish
+The main pipeline is:
 
-The overall pipeline is:
-
-1. Collect and organize multilingual speech recordings
-2. Resample audio and trim silence
-3. Extract fixed-length acoustic features
-4. Standardize the feature representation
-5. Train and evaluate supervised classifiers
-6. Explore the feature space using unsupervised clustering
-7. Compare model performance using quantitative metrics and visualizations
+1. Collect and organize multilingual speech recordings.
+2. Load audio at **22,050 Hz** and trim silence.
+3. Extract a **46-dimensional acoustic feature vector** from each recording.
+4. Standardize the numerical features.
+5. Compare five supervised classifiers.
+6. Explore latent structure using four unsupervised clustering methods and 2D visualizations.
 
 ## Feature Extraction
 
-Each audio recording is represented by **46 acoustic features**:
+Each recording is summarized by the mean and variance of frame-level acoustic features:
 
-| Feature group | Representation | Number of features |
-|---|---|---:|
-| MFCC | Mean and variance of 20 MFCC coefficients | 40 |
-| Spectral Centroid | Mean and variance | 2 |
-| Zero Crossing Rate | Mean and variance | 2 |
-| RMS Energy | Mean and variance | 2 |
-| **Total** |  | **46** |
+| Acoustic feature | Statistics | Features |
+| --- | --- | ---: |
+| Mel-Frequency Cepstral Coefficients (MFCCs) | Mean and variance of 20 coefficients | 40 |
+| Spectral centroid | Mean and variance | 2 |
+| Zero-crossing rate | Mean and variance | 2 |
+| RMS energy | Mean and variance | 2 |
+| **Total** | | **46** |
 
-Audio is loaded at a sampling rate of **22,050 Hz**, and silence is trimmed before feature extraction.
 
 ## Supervised Classification
 
-Five classifiers were evaluated:
+An **80/20 stratified train/test split** was used, with **144 recordings in the test set** (36 per language). The project evaluated:
 
 - Logistic Regression
-- Support Vector Machine with RBF kernel
-- Multi-Layer Perceptron
-- K-Nearest Neighbors
+- Support Vector Machine (RBF kernel)
+- Multi-Layer Perceptron (MLP)
+- K-Nearest Neighbors (KNN)
 - Random Forest
 
-The dataset was split using an **80/20 stratified train-test split**, resulting in a balanced test set of 144 recordings.
+### Reported Results
 
-### Classification Results
+| Classifier | Test accuracy |
+| --- | ---: |
+| Logistic Regression | 100% |
+| SVM (RBF kernel) | 100% |
+| MLP | 100% |
+| KNN | 100% |
+| Random Forest | 99% |
 
-| Model | Test Accuracy |
-|---|---:|
-| Logistic Regression | 1.00 |
-| SVM (RBF Kernel) | 1.00 |
-| Multi-Layer Perceptron | 1.00 |
-| K-Nearest Neighbors | 1.00 |
-| Random Forest | 0.99 |
+![Bar chart comparing classification accuracy, precision, recall and F1-score across Logistic Regression, SVM, MLP, KNN and Random Forest.](results/figures/classification_model_comparison.png)
 
-Evaluation included accuracy, weighted precision, weighted recall, weighted F1-score, and confusion matrices.
+*Classification model comparison from the Phase 2 report. The chart summarizes the reported test-set performance of the five methods.*
+
 
 ## Unsupervised Clustering
 
-Four clustering approaches were investigated:
+The extracted feature representations were also investigated without using language labels during model fitting. Four methods were compared:
 
-- K-Means
-- Hierarchical / Agglomerative Clustering with Ward linkage
-- Gaussian Mixture Model
-- DBSCAN
+- **K-Means**
+- **Hierarchical (agglomerative) clustering** with Ward linkage
+- **Gaussian Mixture Models (GMM)**
+- **DBSCAN**
 
-The clustering analysis used internal and external evaluation criteria including:
+Clustering quality was assessed using measures such as **silhouette score**, **Adjusted Rand Index (ARI)**, **Normalized Mutual Information (NMI)**, and **cluster purity**. PCA and t-SNE were used to visualize the samples in two dimensions.
 
-- Silhouette Score
-- Adjusted Rand Index (ARI)
-- Normalized Mutual Information (NMI)
-- Cluster Purity
-- Davies-Bouldin Index
-- Calinski-Harabasz Index
+### Feature-Space Visualization
 
-PCA and t-SNE were also used to visualize the structure of the feature space.
+![Side-by-side PCA and t-SNE projections of the multilingual speech samples, colored by their true German, Italian, Korean and Spanish labels.](results/figures/pca_tsne_language_visualization.png)
 
-Among the tested clustering methods, **Hierarchical Clustering with Ward linkage** produced the strongest overall alignment with the true language labels.
+*PCA and t-SNE projections colored by true language. These are visualization tools, not additional classification models.*
+
+### Clustering Model Comparison
+
+![Bar chart comparing silhouette score, adjusted Rand index, normalized mutual information and purity for K-Means, hierarchical clustering, GMM and DBSCAN.](results/figures/clustering_model_comparison.png)
+
+*Comparison of the four clustering methods from the Phase 2 report. Hierarchical clustering achieved the highest cluster purity and strongest alignment with language labels among the tested methods, while the clusters were not perfectly language-separated.*
 
 ## Repository Structure
 
@@ -125,17 +140,7 @@ More details are available in [`notebooks/README.md`](notebooks/README.md).
 
 ## Running the Project
 
-The notebooks use Python and the following main libraries:
-
-- NumPy
-- pandas
-- librosa
-- Matplotlib
-- seaborn
-- scikit-learn
-- SciPy
-- kneed
-- Jupyter
+The notebooks use Python and libraries including NumPy, pandas, librosa, scikit-learn, Matplotlib, seaborn, SciPy, and kneed.
 
 A basic environment can be created with:
 
